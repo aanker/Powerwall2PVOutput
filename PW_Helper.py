@@ -40,7 +40,7 @@ def insertdb(sqlite_file, values):
         c.execute(sql, (values))
         conn.commit()
         conn.close()
-    except StandardError as e:
+    except Exception as e:
         logger.info("insertdb: " + str(e))
         return False     
 
@@ -54,7 +54,7 @@ def get_sqlite_data(sqlite_file, sqldate):
         rows = c.fetchall()
         conn.commit()
         conn.close()
-    except StandardError as e:
+    except Exception as e:
         logger.info("get_sqlite_data: " + str(e))
         return False
 
@@ -69,7 +69,7 @@ def delete_sqlite_data(sqlite_file, days):
         c.execute(sql)
         conn.commit()
         conn.close()
-    except StandardError as e:
+    except Exception as e:
         logger.info("delete_sqlite_data: " + str(e))
         return False
 
@@ -80,9 +80,9 @@ def getPowerwallData(PowerwallIP):
     try:
         response = urlopen('https://'+PowerwallIP+'/api/meters/aggregates')
         webz = response.read()
-    	stuff = json.loads(webz)
-    	return stuff
-    except StandardError as e:
+        stuff = json.loads(webz)
+        return stuff
+    except Exception as e:
         logger.info("getPowerwallData: " + str(e))
         return False
 
@@ -92,7 +92,7 @@ def getPowerwallSOCData(PowerwallIP):
         webz = response.read()
         soc = json.loads(webz)
         return soc
-    except StandardError as e:
+    except Exception as e:
         logger.info("getPowerwallSOCData: " + str(e))
         return False
 
@@ -117,7 +117,7 @@ class Connection():
             # Initialise a "No status found"
             return "%s,00:00,,,,,,," % datetime.datetime.now().strftime('%Y%m%d')
         if response.status != 200:
-            raise StandardError(response.read())
+            raise Exception(response.read())
 
         return response.read()
 
@@ -161,7 +161,7 @@ class Connection():
         if response.status == 400:
             raise ValueError(response.read())
         if response.status != 200:
-            raise StandardError(response.read())
+            raise Exception(response.read())
     
     def make_request(self, method, path, params=None):
         conn = http.client.HTTPConnection(self.host)
