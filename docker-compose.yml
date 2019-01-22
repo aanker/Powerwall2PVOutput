@@ -1,0 +1,13 @@
+version: '3.2'
+
+services:
+  pwsimple:
+    container_name: pw2pv
+    build:
+      context: .
+      dockerfile: Dockerfile
+    stdin_open: true
+    tty: true
+    command: python3 PW_Simple.py
+    volumes:
+      - .:/code
