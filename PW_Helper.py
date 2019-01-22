@@ -1,14 +1,15 @@
 #!/usr/bin/env python
 import datetime
 import time
-import urllib
-import httplib
+import http.client
 import os
 import ssl
 import json
 import sys
 import sqlite3
 import logging
+from urllib.request import urlopen
+from urllib.parse import urlencode
 from logging.handlers import RotatingFileHandler
 from logging import handlers
 
@@ -77,7 +78,7 @@ def avg(l):
 
 def getPowerwallData(PowerwallIP):
     try:
-        response = urllib.urlopen('https://'+PowerwallIP+'/api/meters/aggregates')
+        response = urlopen('https://'+PowerwallIP+'/api/meters/aggregates')
         webz = response.read()
     	stuff = json.loads(webz)
     	return stuff
@@ -87,7 +88,7 @@ def getPowerwallData(PowerwallIP):
 
 def getPowerwallSOCData(PowerwallIP):
     try:   
-        response = urllib.urlopen('https://'+PowerwallIP+'/api/system_status/soe')
+        response = urlopen('https://'+PowerwallIP+'/api/system_status/soe')
         webz = response.read()
         soc = json.loads(webz)
         return soc
@@ -108,7 +109,7 @@ class Connection():
             params['d'] = date
         if time:
             params['t'] = time
-        params = urllib.urlencode(params)
+        params = urlencode(params)
 
         response = self.make_request("GET", path, params)
 
@@ -153,7 +154,7 @@ class Connection():
             params['v12'] = ext_power_exp    
         if cumulative:
             params['c1'] = 1
-        params = urllib.urlencode(params)
+        params = urlencode(params)
 
         response = self.make_request('POST', path, params)
 
@@ -163,7 +164,7 @@ class Connection():
             raise StandardError(response.read())
     
     def make_request(self, method, path, params=None):
-        conn = httplib.HTTPConnection(self.host)
+        conn = http.client.HTTPConnection(self.host)
         headers = {
                 'Content-type': 'application/x-www-form-urlencoded',
                 'Accept': 'text/plain',
