@@ -1,6 +1,11 @@
 # Powerwall2PVOutput
 Send Tesla Powerwall 2 data to PVOutput
 
+Please see [the original project](https://github.com/ekul135/Powerwall2PVOutput) for the source. The changes in this fork from the original include:
+
+*  Update to Python3
+*  Add configuration files for Docker build
+
 #### Note code has been updated to work with https, firmware versions 1.19+
 
 2 options  
