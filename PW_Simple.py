@@ -10,7 +10,7 @@ logger.info('Start PVOutput simple')
 
 while True:
     try:
-    	lpvPower=[]
+        lpvPower=[]
         lpvVoltage=[]
         lpvBatteryFlow=[]
         lpvLoadPower=[]
