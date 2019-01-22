@@ -9,7 +9,7 @@ logger.info('Start PVOutput datalogger')
 
 while True:
     try:
-    	pw=hlp.getPowerwallData(cfg.PowerwallIP)
+        pw=hlp.getPowerwallData(cfg.PowerwallIP)
         soc=hlp.getPowerwallSOCData(cfg.PowerwallIP)
         if (pw!=False and soc!=False):
             lpvPower=float(pw['solar']['instant_power'])
